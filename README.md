@@ -4,4 +4,6 @@ This program automatically shutsdown steam after all downloads and installs on s
 First put all the games you want to update or download in queue then click Auto Shutdown, when all items have finished your pc will shutdown in about 10 seconds.
 If there are no items in queue and you accidentally click auto shutdown, you can click on cancel scheduled shutdown to cancel it.
 
+compile in x86
+
 
