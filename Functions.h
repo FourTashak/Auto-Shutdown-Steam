@@ -69,14 +69,14 @@ int Autoshutdown()
 	int queValue = 0;
 
 	DWORD procid = GetProcId(L"steam.exe"); //Gets steams Process ID
-	uintptr_t modulebase = GetModuleBaseAddress(procid, L"tier0_s.dll"); //Gets the steamui.dll's base address
+	uintptr_t modulebase = GetModuleBaseAddress(procid, L"tier0_s.dll"); //Gets the tier0_s.dll's base address
 
 	HANDLE hprocess = 0;
 	hprocess = OpenProcess(PROCESS_ALL_ACCESS, NULL, procid);
 
-	uintptr_t baseAddress = modulebase + 0x000934EC;
+	uintptr_t baseAddress = modulebase + 0x00092174;
 
-	std::vector<unsigned int> queOffsets = { 0x18, 0x14, 0x14, 0xD8, 0xE0, 0x0, 0x0 };
+	std::vector<unsigned int> queOffsets = { 0x18, 0x14, 0x14, 0xE0, 0x0, 0x0 };
 	uintptr_t queAddr = FindDMAAddy(hprocess, baseAddress, queOffsets);
 
 	while (true)
@@ -96,27 +96,4 @@ int Autoshutdown()
 		Sleep(1000);
 	}
 	return 0;
-}
-
-int ItemsInQue(int queNumber)
-{
-	int queValue=0;
-
-	DWORD procid = GetProcId(L"steam.exe"); //Gets steams Process ID
-	uintptr_t modulebase = GetModuleBaseAddress(procid, L"steamui.dll"); //Gets the steamui.dll's base address
-
-	HANDLE hprocess = 0;
-	hprocess = OpenProcess(PROCESS_ALL_ACCESS, NULL, procid);
-
-	uintptr_t baseAddress = modulebase + 0x00B945F8;
-
-	std::vector<unsigned int> queOffsets = { 0x74, 0x4, 0x180, 0xc0, 0xe0, 0x0, 0x0 };
-	uintptr_t queAddr = FindDMAAddy(hprocess, baseAddress, queOffsets);
-
-	while (true)
-	{
-		ReadProcessMemory(hprocess, (BYTE*)queAddr, &queValue, sizeof(queValue), nullptr);
-		return queValue;
-		Sleep(1000);
-	}
 }
